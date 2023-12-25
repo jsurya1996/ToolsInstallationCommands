@@ -51,4 +51,33 @@ $ sudo hostnamectl set-hostname master-node
 # To set Host name in Slave Node
 $ sudo hostnamectl set-hostname slave-node
 
+Step-3: Running and Deploying Kubernetes
+# Initialize kubernetes on Master Node
+$ sudo kubeadm init
+
+# You need to run the following as a normal user to start using your cluster
+$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+#check nodes connected to cluster
+$ kubectl get nodes
+
+# Deploy Pod Network to Cluster 
+$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+# Get worker token to add workers to cluster
+$ kubeadm token create --print-join-command
+
+########### Add the slave node to form a cluster by executing token in worker nodes as root user ###########
+# Get Nodes
+$ kubectl get nodes
+
+# Get the pods running
+$ kubectl get pods --all-namespaces 
+
+# To restart Kublet service
+$ sudo systemctl restart kubelet.service
+
+
 
