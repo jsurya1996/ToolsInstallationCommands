@@ -1,0 +1,16 @@
+Sudo apt update && upgrage -y
+
+# To install Docker in VM
+Sudo apt install docker.io -y
+
+# To Add docker as user group
+$ sudo usermod -aG docker ec2-user
+
+$ docker info
+#Restart the session
+
+# To run Docker file her pythonweb is i mentioned as image name
+docker build -t pythonapp .
+
+# To Run Docker conatiner here pythonwebapp is container name i am given and 5501 is host port and 5000 is local host port pythonapp is image to run in container
+docker run -it --name pythonwebapp -d -p 5501:5000 pythonapp
